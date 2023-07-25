@@ -16,6 +16,8 @@ jobs:
         with:
           node-version: '14'
       - run: npm install -g bats
+      
+      - run: echo "Hello, GitHub Actions!"
 
   staging-deploy:
     if: ${{ github.event.pull_request.user.login == 'devi854' && github.base_ref == 'staging' }}

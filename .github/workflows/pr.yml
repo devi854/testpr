@@ -1,0 +1,40 @@
+name: deploy
+on:
+  pull_request:
+    branches:
+      - main
+      - statging
+      - production
+
+jobs:
+  dev-deploy:
+    if: ${{ github.base_ref == 'main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+
+  staging-deploy:
+    if: ${{ github.event.pull_request.user.login == 'devi854' && github.base_ref == 'staging' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      # Additional steps for staging deployment
+
+  production-deploy:
+    if: ${{ github.event.pull_request.user.login == 'devi854' && github.base_ref == 'production' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      # Additional steps for production deployment

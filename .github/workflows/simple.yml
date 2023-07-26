@@ -1,0 +1,20 @@
+name: simple workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check_approval:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if the user is approved
+        run: |
+          approved_users="devi854,user2" # Add approved GitHub usernames here, separated by commas
+          if [[ ",$approved_users," != *",$GITHUB_ACTOR,"* ]]; then
+            echo "Error: You are not an approved user to run this workflow."
+            exit 1
+          fi
+
+      # Add your regular workflow steps below
+      # ...

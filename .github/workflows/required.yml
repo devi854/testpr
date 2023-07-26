@@ -1,0 +1,22 @@
+name: required one
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check_approval:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if the user is authorized
+        env:
+          AUTHORIZED_USER_1: ${{ secrets.AUTHORIZED_USER_1 }}
+          AUTHORIZED_USER_2: ${{ secrets.AUTHORIZED_USER_2 }}
+        run: |
+          if [[ "$AUTHORIZED_USER_1" != "$GITHUB_ACTOR" && "$AUTHORIZED_USER_2" != "$GITHUB_ACTOR" ]]; then
+            echo "Error: You are not an authorized user to run this workflow."
+            exit 1
+          fi
+
+      # Add your regular workflow steps below
+      # ...

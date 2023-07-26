@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Check Condition
         run: |
-          if [ "$GITHUB_ACTOR" == "${{env.USER1}}" ] || [ "$GITHUB_ACTOR" == "${{env.USER2}}" ]; then
+          if [[ github.actor == "${{env.USER1}}" ] || [ github.actor == "${{env.USER2}}" ]]; then
             echo "Condition met: USER1 or USER2"
             will approve to run workflow
           else

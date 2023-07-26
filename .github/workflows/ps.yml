@@ -1,22 +1,29 @@
-name: My Workflow
+name: testing access
 
 on:
   workflow_dispatch:
-env:
-  USER1: ${{ secrets.USER1 }}
-  USER2: ${{ secrets.USER2 }}
 
 jobs:
-  my_job:
+  check_approval:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check Condition
+      - name: Check if the user is approved
         run: |
-          if [ "$GITHUB_ACTOR" == "${{env.USER1}}" ] || [ "$GITHUB_ACTOR" == "${{env.USER2}}" ]; then
-            echo "Condition met: USER1 or USER2"
-            will approve to run workflow
-          else
-            echo "Condition not met"
-            un authorised
+          approved_users="${{ secrets.APPROVED_USERS }}"
+          IFS=',' read -ra users <<< "$approved_users"
+          is_approved=false
+          for user in "${users[@]}"; do
+            if [ "$user" = "$GITHUB_ACTOR" ]; then
+              is_approved=true
+              break
+            fi
+          done
+
+          if [ "$is_approved" != "true" ]; then
+            echo "Error: You are not an approved user to run this workflow."
+            exit 1
           fi
+
+      # Add your regular workflow steps below
+      # ...

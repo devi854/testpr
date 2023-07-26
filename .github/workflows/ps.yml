@@ -13,11 +13,10 @@ jobs:
     steps:
       - name: Check Condition
         run: |
-          if [[ ("$GITHUB_ACTOR" == "${{ secrets.USER1 }}" || "$GITHUB_ACTOR" == "${{ secrets.USER2 }}") ]]; then
+          if [ "$GITHUB_ACTOR" == "${{env.USER1}}" ] || [ "$GITHUB_ACTOR" == "${{env.USER2}}" ]; then
             echo "Condition met: USER1 or USER2"
-      # Add your desired actions or commands here for the condition being true
-            
-      # Add your desired actions or commands here for the condition being false
-  
-
-      
+            will approve to run workflow
+          else
+            echo "Condition not met"
+            un authorised
+          fi

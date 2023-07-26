@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check if the user is approved
         run: |
-          approved_users="devi854,user2" # Add approved GitHub usernames here, separated by commas
+          approved_users="uesr1,user2" # Add approved GitHub usernames here, separated by commas
           if [[ ",$approved_users," != *",$GITHUB_ACTOR,"* ]]; then
             echo "Error: You are not an approved user to run this workflow."
             exit 1
